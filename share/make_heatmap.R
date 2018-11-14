@@ -1,3 +1,5 @@
+library(fields)
+
 #Helper functions to compute accuracy metrics
 FPR <- function(y, yhat){
   sum(yhat==1 & y==0)/sum(y==0)
