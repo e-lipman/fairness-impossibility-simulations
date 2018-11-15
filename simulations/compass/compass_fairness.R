@@ -1,4 +1,6 @@
 source("../../share/make_heatmap.R")
+source("../../share/overlay_heatmaps.R")
+library(randomForest)
 
 # setup and model
 compass = read.csv("propublica_data.csv", stringsAsFactors=F)
@@ -19,5 +21,10 @@ probs_rf <- predict(rf, type="prob")[,2]
 lmod <- glm(Two_yr_Recidivism~., compass[,!names(compass)=="White"], family="binomial")
 probs_lm <- predict(lmod,type="response")
 
-make_heatmap(compass$Two_yr_Recidivism, probs_rf, compass$White)
-make_heatmap(compass$Two_yr_Recidivism, probs_lm, compass$White)
+# make heatmaps
+rf_metrics = make_heatmap(compass$Two_yr_Recidivism, probs_rf, compass$White)
+lm_metrics = make_heatmap(compass$Two_yr_Recidivism, probs_lm, compass$White)
+
+# overlay heatmaps
+overlay(rf_metrics$fpr, rf_metrics$fnr, rf_metrics$ppv, thresh=.025)
+overlay(lm_metrics$fpr, lm_metrics$fnr, lm_metrics$ppv, thresh=.025)

@@ -45,4 +45,6 @@ make_heatmap <- function(y, probs, a, cutoffs=seq(0,1,length=100)){
   abline(0,1)
   image.plot(abs(ppv), xlab="a=0",ylab="a=1",main="PPV")
   abline(0,1)
+  
+  return(list(fpr=fpr, fnr=fnr, ppv=ppv))
 }

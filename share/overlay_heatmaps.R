@@ -1,4 +1,6 @@
 overlay <- function(fpr, fnr, ppv, thresh=.01){
+  par(mfrow=c(1,1))
+  
   stopifnot(dim(fpr)==dim(fnr))
   stopifnot(dim(fnr)==dim(ppv))
   ppv[is.na(ppv)]=1
